@@ -12,8 +12,11 @@ public:
     int getEdgeWeight(int v1, int v2) const;
     int getNumVertices() const;
     const Party &getParty(int partyId) const;
+    bool haveEdge(int v1, int v2);
 
 private:
     vector<Party> mVertices;
     vector<vector<int>> mEdges;
 };
+
+

@@ -1,6 +1,11 @@
 #pragma once
 
-class SelectionPolicy { };
+#include "Graph.h"
+
+class SelectionPolicy {
+
+
+ };
 
 class MandatesSelectionPolicy: public SelectionPolicy{ };
 

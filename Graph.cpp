@@ -24,3 +24,9 @@ const Party &Graph::getParty(int partyId) const
 {
     return mVertices[partyId];
 }
+
+
+bool Graph::haveEdge(int v1, int v2)
+{
+    return mEdges[v1][v2] != 0;
+}
