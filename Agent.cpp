@@ -17,5 +17,11 @@ int Agent::getPartyId() const
 
 void Agent::step(Simulation &sim)
 {
-    // TODO: implement this method
+    // selectionPolicy - select
+}
+
+Agent::Agent(const Agent &other){
+    mSelectionPolicy = other.mSelectionPolicy;
+    mAgentId = other.mAgentId;
+    mPartyId = other.mPartyId;
 }
