@@ -1,4 +1,5 @@
 #include "Agent.h"
+#include "Simulation.h"
 
 Agent::Agent(int agentId, int partyId, SelectionPolicy *selectionPolicy) : mAgentId(agentId), mPartyId(partyId), mSelectionPolicy(selectionPolicy)
 {
@@ -17,7 +18,11 @@ int Agent::getPartyId() const
 
 void Agent::step(Simulation &sim)
 {
-    // selectionPolicy - select
+    // selecet party
+    sim.
+    if (sim.getParty().getState() == Waiting) //insert party ID 
+        sim.getParty().setState(CollectingOffers);
+    
 }
 
 Agent::Agent(const Agent &other){
@@ -25,3 +30,4 @@ Agent::Agent(const Agent &other){
     mAgentId = other.mAgentId;
     mPartyId = other.mPartyId;
 }
+

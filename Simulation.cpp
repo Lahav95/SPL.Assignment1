@@ -7,13 +7,26 @@ Simulation::Simulation(Graph graph, vector<Agent> agents) : mGraph(graph), mAgen
 
 void Simulation::step()
 {
-    // TODO: implement this method
+  for (int i = 0; i<mGraph.getNumVertices(); i++){
+    getParty1(i).step(*this); 
+  }
+
+  for (Agent a: mAgents){
+    a.step(*this);
+  }
 }
 
 bool Simulation::shouldTerminate() const
 {
-    // TODO implement this method
-    return true;
+    bool toEnd= true;
+
+//  for loop of coalition mandates
+
+    for (int i=0; i< mGraph.getNumVertices(); i++){
+        if (getParty(i).getState() != Joined)
+            toEnd = false;
+    }
+    return toEnd;
 }
 
 const Graph &Simulation::getGraph() const
@@ -29,6 +42,11 @@ const vector<Agent> &Simulation::getAgents() const
 const Party &Simulation::getParty(int partyId) const
 {
     return mGraph.getParty(partyId);
+}
+
+Party &Simulation::getParty1(int partyId) 
+{
+    return mGraph.getParty2(partyId);
 }
 
 /// This method returns a "coalition" vector, where each element is a vector of party IDs in the coalition.
