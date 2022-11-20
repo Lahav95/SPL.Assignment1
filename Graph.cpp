@@ -25,6 +25,11 @@ const Party &Graph::getParty(int partyId) const
     return mVertices[partyId];
 }
 
+ Party &Graph::getParty2(int partyId) 
+{
+    return mVertices[partyId];
+}
+
 
 bool Graph::haveEdge(int v1, int v2)
 {

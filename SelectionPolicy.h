@@ -14,12 +14,20 @@ public:
 
 class MandatesSelectionPolicy: public SelectionPolicy{ 
 
+    //call biggestMandate func to select the 
+
     void join();
+
+    //add self to offers vector
 
 };
 
 class EdgeWeightSelectionPolicy: public SelectionPolicy{ 
 
+    //call biggestEdge func to select the
+
     void join();
+
+    //add self to offers vector
 
 };

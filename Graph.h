@@ -12,7 +12,8 @@ public:
     int getEdgeWeight(int v1, int v2) const;
     int getNumVertices() const;
     const Party &getParty(int partyId) const;
-    Party &getParty(int partyId);
+    Party &getParty2(int partyId) ;
+    
 
     bool haveEdge(int v1, int v2) ;
 

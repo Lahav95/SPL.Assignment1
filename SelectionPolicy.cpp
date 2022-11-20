@@ -41,7 +41,7 @@ Party SelectionPolicy::biggestEdge(Simulation &sim){
 
     for (int i = 0; i < sim.getGraph().getNumVertices(); i++)
         if (i != ) // compare it with party ID
-            if (isValid(i, getPartyId())) // same ID as above
+            if (isValid(i, sim.getAgentbyId().)) // same ID as above
                 connected.push_back(sim.getParty(i));
 
     int maxVal = 0;

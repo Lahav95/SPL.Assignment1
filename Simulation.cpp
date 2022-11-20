@@ -11,8 +11,8 @@ void Simulation::step()
     getParty1(i).step(*this); 
   }
 
-  for (Agent a: mAgents){
-    a.step(*this);
+  for (Agent agent: mAgents){
+    agent.step(*this);
   }
 }
 
@@ -55,4 +55,13 @@ const vector<vector<int>> Simulation::getPartiesByCoalitions() const
 {
     // TODO: you MUST implement this method for getting proper output, read the documentation above.
     return vector<vector<int>>();
+}
+
+Agent &Simulation::getAgentbyId(int agentId)
+{
+
+    for(Agent agent: mAgents)
+        if (agent.getId() == agentId)
+            return agent;
+
 }

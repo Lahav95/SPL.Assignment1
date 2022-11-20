@@ -29,13 +29,13 @@ void Coalition::addParty(Party& _p){
 
 } 
 
-Party Coalition::maxParty(){
-   int max = 0;
-   Party& maxP;
-   for(Party& _p: lParty){
-      if(_p.getMandates() > max){
-         max = _p.getMandates();
-         maxP = _p;
-      }
-   }
-}
+// Party Coalition::maxParty(){
+//    int max = 0;
+//    Party& maxP;
+//    for(Party& _p: lParty){
+//       if(_p.getMandates() > max){
+//          max = _p.getMandates();
+//          maxP = _p;
+//       }
+//    }
+//}
