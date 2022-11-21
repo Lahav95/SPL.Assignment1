@@ -33,8 +33,8 @@ bool Simulation::shouldTerminate() const
 
     while (!toEnd)
     {
-        for (const Coalition coalitionMandates: mCoalitions) {
-            if (coalitionMandates.numOfMandates > 60)
+        for (int i = 0; i<mCoalitions.size(); i++) {
+            if (mCoalitions.at(i).numOfMandates > 60)
                 toEnd = true;
         }
 
