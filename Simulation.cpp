@@ -1,8 +1,18 @@
 #include "Simulation.h"
+#include "Coalition.h"
 
 Simulation::Simulation(Graph graph, vector<Agent> agents) : mGraph(graph), mAgents(agents) 
 {
-    // You can change the implementation of the constructor, but not the signature!
+    // for (Agent a: agents){
+    //     int coalitionId = a.getId();
+    //     int numOfMandates = getParty(a.getPartyId()).getMandates();
+    //     Coalition c (coalitionId, numOfMandates);       //creates a coalition object
+
+    //     mCoalitions.push_back(c);       // add coalition to the list in simulation
+
+    //     partiesByCoalitions.push_back(c.lPartiesId);    // add coalition to partiesByCoalition
+    //     a.coalitionId = coalitionId;            //update coalition Id of agent //NNN
+// }
 }
 
 void Simulation::step()
@@ -57,11 +67,24 @@ const vector<vector<int>> Simulation::getPartiesByCoalitions() const
     return vector<vector<int>>();
 }
 
-// Agent &Simulation::getAgentbyId(int agentId)       // Not necessarily needed
-// {
+Agent &Simulation::getAgentbyId(int agentId)       
+{
 
-//     for(Agent agent: mAgents)
-//         if (agent.getId() == agentId)
-//             return agent;
+    for(Agent agent: mAgents)
+        if (agent.getId() == agentId)
+            return agent;
 
-// }
+}
+
+void Simulation::addParty(int coalitionId, int partyId){      //NNN
+    
+    // partiesByCoalitions.at(coalitionId).push_back(partyId);
+
+
+    // coalitionParties.push_back(party);
+    // numOfMandates = numOfMandates+party.getMandates();
+    //  _p.setCoalitionId(mCoalition);
+ //  thisSim.partiesByCoalitions.at(mCoalition).push_back(_p.getPartyId());
+   // clone
+
+}  

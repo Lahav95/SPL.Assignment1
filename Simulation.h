@@ -21,7 +21,8 @@ public:
     const Party &getParty(int partyId) const;
     const vector<vector<int>> getPartiesByCoalitions() const;
     Party &getParty1(int partyId);
-    // Agent &getAgentbyId(int agentId);   // Not necessarily needed
+    Agent &getAgentbyId(int agentId);   // Not necessarily needed
+    void addParty(int coalitionId,int partyId);
     
 
 

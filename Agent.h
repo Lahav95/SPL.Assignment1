@@ -13,7 +13,10 @@ public:
     int getPartyId() const;
     int getId() const;
     void step(Simulation &);
-    void select(Agent agent);
+
+    int i=0;                    //NNN
+    int& numOfMandates = i;     //NNN
+    void setNumOfM(int);        //NNN
 
 
     

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-//#include "Simulation.h"
+#include "Simulation.h"
 
 using std::vector;
 
@@ -14,24 +14,29 @@ class Coalition
 {
 public:
 
+        Coalition();
+
         Coalition(int, int);
 
         int mCoalition;
         int numOfMandates;
+    //    Simulation& thisSim;
         bool isMajority;
 
+
         
-        void addAgent(Agent& agent);
+
         void addParty(Party& _p);  
-        void merge(Coalition other); 
+    //    void merge(Coalition other); 
         Party maxParty();
+        int getMandates(int CoalitionId);
 
     //   void addAgent(Agent*);
         // merge()
         // max()
         
 
-       vector<Party> lParty;      // parties of this coalition
+       vector<int> lPartiesId;      // parties of this coalition
        vector<Agent> lAgent;      // agents of this coalition
 
 };

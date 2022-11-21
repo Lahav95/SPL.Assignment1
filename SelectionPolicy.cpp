@@ -45,7 +45,7 @@ void MandatesSelectionPolicy::select(Simulation &sim, Agent agent){
 EdgeWeightSelectionPolicy::EdgeWeightSelectionPolicy(){};
 EdgeWeightSelectionPolicy::~EdgeWeightSelectionPolicy(){};
 
-void SelectionPolicy::select(Simulation &sim, Agent agent){
+void EdgeWeightSelectionPolicy::select(Simulation &sim, Agent agent){
 
     int maxVal = 0;
     int i;

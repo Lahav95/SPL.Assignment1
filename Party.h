@@ -1,8 +1,11 @@
 #pragma once
 #include <string>
+#include <vector>
 
 
 using std::string;
+using std::vector;
+
 
 class Agent;
 class JoinPolicy;
@@ -28,6 +31,9 @@ public:
     int timer;
     int coalitionId = -1;
     void setCoalitionId(int);
+    vector <int> offers;
+    void addOffer(int agentId);
+    int getPartyId();
 //    void clone();
 
 private:
