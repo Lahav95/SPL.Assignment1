@@ -15,13 +15,17 @@ bool SelectionPolicy::isValid(int v1, int v2, Simulation &sim){
     return valid;
 }
 
-Party SelectionPolicy::biggestMandate(Simulation &sim){
+MandatesSelectionPolicy::MandatesSelectionPolicy(){};
+MandatesSelectionPolicy::~MandatesSelectionPolicy(){};
+
+
+Party MandatesSelectionPolicy::select(Simulation &sim, Agent agent){
 
     vector<Party> connected;
 
     for (int i = 0; i < sim.getGraph().getNumVertices(); i++)
-        if (i != ) // compare it with party ID
-            if (isValid(i, getPartyId())) // same ID as above
+        if (i != agent.getPartyId()) 
+            if (isValid(i, agent.getPartyId(), sim)) 
                 connected.push_back(sim.getParty(i));
 
     int maxVal = 0;
@@ -35,23 +39,22 @@ Party SelectionPolicy::biggestMandate(Simulation &sim){
     return connected[i];
 }
 
-Party SelectionPolicy::biggestEdge(Simulation &sim){
+EdgeWeightSelectionPolicy::EdgeWeightSelectionPolicy(){};
+EdgeWeightSelectionPolicy::~EdgeWeightSelectionPolicy(){};
+
+Party SelectionPolicy::select(Simulation &sim, Agent agent){
 
     vector<Party> connected;
 
-    for (int i = 0; i < sim.getGraph().getNumVertices(); i++)
-        if (i != ) // compare it with party ID
-            if (isValid(i, sim.getAgentbyId().)) // same ID as above
-                connected.push_back(sim.getParty(i));
-
     int maxVal = 0;
     int i;
-    
-    for (i = 0; i < connected.size(); i++){
-        if (sim.getGraph().getEdgeWeight() > maxVal) // insert both party's ID
-            maxVal = sim.getGraph().getEdgeWeight();  // same IDs as above
-    }
 
-    return connected[i];
+    for (i = 0; i < sim.getGraph().getNumVertices(); i++)
+        if (i != agent.getPartyId()) 
+            if (isValid(i, agent.getPartyId(), sim)) 
+                if (sim.getGraph().getEdgeWeight(i, agent.getPartyId()) > maxVal)
+                    maxVal = sim.getGraph().getEdgeWeight(i, agent.getPartyId());
+
+    return sim.getParty(i); 
 }
 

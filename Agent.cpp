@@ -20,24 +20,24 @@ int Agent::getPartyId() const
 void Agent::step(Simulation &sim)
 {
     // select party ()
-    //add self to offers vector (offer to join)
+    // add self to offers vector (offer to join)
     if (sim.getParty().getState() == Waiting) //insert party ID 
         sim.getParty().setState(CollectingOffers);
     
 }
 
-void Agent::select(Agent agent)
-{
+// void Agent::select(Agent agent)    // Select a policy
+// {
 
-    agent.mSelectionPolicy
+//     agent.mSelectionPolicy
 
 
 
-}
+// }
 
-Agent::Agent(const Agent &other){
-    mSelectionPolicy = other.mSelectionPolicy;
-    mAgentId = other.mAgentId;
-    mPartyId = other.mPartyId;
-}
+// Agent::Agent(const Agent &other){
+//     mSelectionPolicy = other.mSelectionPolicy;
+//     mAgentId = other.mAgentId;
+//     mPartyId = other.mPartyId;
+// }
 

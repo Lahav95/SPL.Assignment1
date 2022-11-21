@@ -57,11 +57,11 @@ const vector<vector<int>> Simulation::getPartiesByCoalitions() const
     return vector<vector<int>>();
 }
 
-Agent &Simulation::getAgentbyId(int agentId)
-{
+// Agent &Simulation::getAgentbyId(int agentId)       // Not necessarily needed
+// {
 
-    for(Agent agent: mAgents)
-        if (agent.getId() == agentId)
-            return agent;
+//     for(Agent agent: mAgents)
+//         if (agent.getId() == agentId)
+//             return agent;
 
-}
+// }
