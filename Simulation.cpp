@@ -1,18 +1,19 @@
 #include "Simulation.h"
 #include "Coalition.h"
+#include "Agent.h"
 
 Simulation::Simulation(Graph graph, vector<Agent> agents) : mGraph(graph), mAgents(agents) 
 {
-    // for (Agent a: agents){
-    //     int coalitionId = a.getId();
-    //     int numOfMandates = getParty(a.getPartyId()).getMandates();
-    //     Coalition c (coalitionId, numOfMandates);       //creates a coalition object
+    for (Agent a: agents){
+        int coalitionId = a.getId();
+        int numOfMandates = getParty(a.getPartyId()).getMandates();
+        Coalition c (coalitionId, numOfMandates);       //creates a coalition object
 
-    //     mCoalitions.push_back(c);       // add coalition to the list in simulation
+        mCoalitions.push_back(c);       // add coalition to the list in simulation
 
-    //     partiesByCoalitions.push_back(c.lPartiesId);    // add coalition to partiesByCoalition
-    //     a.coalitionId = coalitionId;            //update coalition Id of agent //NNN
-// }
+    //    partiesByCoalitions.push_back(c.lPartiesId);    // add coalition to partiesByCoalition
+        a.coalitionId = coalitionId;            //update coalition Id of agent //NNN
+    }
 }
 
 void Simulation::step()
@@ -28,14 +29,22 @@ void Simulation::step()
 
 bool Simulation::shouldTerminate() const
 {
-    bool toEnd= true;
+    bool toEnd= false;
 
-//  for loop of coalition mandates
+    while (!toEnd)
+    {
+        for (const Coalition coalitionMandates: mCoalitions) {
+            if (coalitionMandates.numOfMandates > 60)
+                toEnd = true;
+        }
 
-    for (int i=0; i< mGraph.getNumVertices(); i++){
-        if (getParty(i).getState() != Joined)
-            toEnd = false;
+    
+        for (int i=0; i< mGraph.getNumVertices(); i++){
+            if (getParty(i).getState() != Joined)
+                toEnd = true;
+        }
     }
+    
     return toEnd;
 }
 

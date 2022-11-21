@@ -4,6 +4,7 @@
 
 #include "Graph.h"
 #include "Agent.h"
+#include "Coalition.h"
 
 using std::string;
 using std::vector;
@@ -23,6 +24,9 @@ public:
     Party &getParty1(int partyId);
     Agent &getAgentbyId(int agentId);   // Not necessarily needed
     void addParty(int coalitionId,int partyId);
+     void addCoalition(); // initialize coalitions list      //NNN
+    vector<vector<int>> partiesByCoalitions;
+    vector<Coalition> mCoalitions;
     
 
 

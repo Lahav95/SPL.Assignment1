@@ -23,7 +23,7 @@ void Coalition::addParty(Party& _p){      //NNN
  //  thisSim.partiesByCoalitions.at(mCoalition).push_back(_p.getPartyId());
    // clone
 
-} 
+}  
 
    int Coalition::getMandates(int CoalitionId){
       return numOfMandates;

@@ -20,7 +20,7 @@ public:
 
         int mCoalition;
         int numOfMandates;
-    //    Simulation& thisSim;
+    //   Simulation& thisSim;
         bool isMajority;
 
 
@@ -28,7 +28,7 @@ public:
 
         void addParty(Party& _p);  
     //    void merge(Coalition other); 
-        Party maxParty();
+    //    Party maxParty();
         int getMandates(int CoalitionId);
 
     //   void addAgent(Agent*);
@@ -37,6 +37,6 @@ public:
         
 
        vector<int> lPartiesId;      // parties of this coalition
-       vector<Agent> lAgent;      // agents of this coalition
+    //   vector<Agent> lAgent;      // agents of this coalition
 
 };

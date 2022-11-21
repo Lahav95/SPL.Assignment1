@@ -1,8 +1,9 @@
 #pragma once
 
 #include <vector>
-#include "Graph.h"
 
+class Simulation;
+class Coalition;
 class SelectionPolicy;
 
 class Agent
@@ -14,10 +15,12 @@ public:
     int getId() const;
     void step(Simulation &);
 
+    int coalitionId; //NNN
     int i=0;                    //NNN
     int& numOfMandates = i;     //NNN
     void setNumOfM(int);        //NNN
-
+    void setCoalitionId(int); //?
+    int getCoalitionId(); //?
 
     
 private:

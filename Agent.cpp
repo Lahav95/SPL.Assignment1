@@ -25,9 +25,11 @@ void Agent::step(Simulation &sim)
     
 }
 
-// Agent::Agent(const Agent &other){
-//     mSelectionPolicy = other.mSelectionPolicy;
-//     mAgentId = other.mAgentId;
-//     mPartyId = other.mPartyId;
-// }
+void Agent:: setCoalitionId(int id){
+    coalitionId=id;
+}
+
+int Agent:: getCoalitionId(){
+    return coalitionId;
+}
 
