@@ -1,16 +1,23 @@
 
 #include "SelectionPolicy.h"
 #include "Simulation.h"
+#include "vector"
 
 using std::vector;
 
 
-bool SelectionPolicy::isValid(int v1, int v2, Simulation &sim){
+bool SelectionPolicy::isValid(int offeringParty, int recievingParty, Simulation &sim){
 
+    bool offered = false;
+    for(const int agent: sim.getParty(recievingParty).offers)
+    {
+        if (sim.getParty(agent).coalitionId == sim.getParty(offeringParty).coalitionId)
+            offered = true;
+    }
     bool valid = true;
-    if(sim.getGraph().getEdgeWeight(v1, v2) == 0 || sim.getParty(v1).getState() == Joined) 
-    // add || if another agent from the coaliion
-    // already offered this party to join
+    if(sim.getGraph().getEdgeWeight(offeringParty, recievingParty) == 0 
+        || sim.getParty(offeringParty).getState() == Joined || offered) 
+        valid = false;
 
     return valid;
 }
@@ -19,35 +26,30 @@ MandatesSelectionPolicy::MandatesSelectionPolicy(){};
 MandatesSelectionPolicy::~MandatesSelectionPolicy(){};
 
 
-Party MandatesSelectionPolicy::select(Simulation &sim, Agent agent){
+void MandatesSelectionPolicy::select(Simulation &sim, Agent agent){
 
-    vector<Party> connected;
+    int maxVal = 0;
+    int i;
+    const int agentId = agent.getId();
 
     for (int i = 0; i < sim.getGraph().getNumVertices(); i++)
         if (i != agent.getPartyId()) 
             if (isValid(i, agent.getPartyId(), sim)) 
-                connected.push_back(sim.getParty(i));
+                if (sim.getParty(i).getMandates() > maxVal)
+                     maxVal = sim.getParty(i).getMandates();
 
-    int maxVal = 0;
-    int i;
-    
-    for (i = 0; i < connected.size(); i++){
-        if (connected[i].getMandates() > maxVal)
-            maxVal = connected[i].getMandates();
-    }
+    sim.getParty1(agent.getId()).offers.push_back(agentId);
 
-    return connected[i];
 }
 
 EdgeWeightSelectionPolicy::EdgeWeightSelectionPolicy(){};
 EdgeWeightSelectionPolicy::~EdgeWeightSelectionPolicy(){};
 
-Party SelectionPolicy::select(Simulation &sim, Agent agent){
-
-    vector<Party> connected;
+void SelectionPolicy::select(Simulation &sim, Agent agent){
 
     int maxVal = 0;
     int i;
+    const int agentId = agent.getId();
 
     for (i = 0; i < sim.getGraph().getNumVertices(); i++)
         if (i != agent.getPartyId()) 
@@ -55,6 +57,6 @@ Party SelectionPolicy::select(Simulation &sim, Agent agent){
                 if (sim.getGraph().getEdgeWeight(i, agent.getPartyId()) > maxVal)
                     maxVal = sim.getGraph().getEdgeWeight(i, agent.getPartyId());
 
-    return sim.getParty(i); 
+    sim.getParty1(agent.getId()).offers.push_back(agentId); 
 }
 
