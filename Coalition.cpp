@@ -4,9 +4,9 @@
 #include "Simulation.h"
 
 
-Coalition::Coalition(): mCoalition(-1), numOfMandates(-1), isMajority(false)  {}
+Coalition::Coalition(): mCoalition(-1), numOfMandates(-1) {}
 
-Coalition::Coalition(int Id, int numOfMandates) : mCoalition(Id), numOfMandates(numOfMandates) , isMajority(false){
+Coalition::Coalition(int Id, int numOfMandates) : mCoalition(Id), numOfMandates(numOfMandates) {
 
 
  //  lParty;
@@ -15,13 +15,11 @@ Coalition::Coalition(int Id, int numOfMandates) : mCoalition(Id), numOfMandates(
 
 
 
-void Coalition::addParty(Party& _p){      //NNN
+void Coalition::addParty(Party& _p, int partyId){
     
-  // lParty.push_back(_p);
+   lPartiesId.push_back(partyId);
    numOfMandates = numOfMandates+_p.getMandates();
    _p.setCoalitionId(mCoalition);
- //  thisSim.partiesByCoalitions.at(mCoalition).push_back(_p.getPartyId());
-   // clone
 
 }  
 

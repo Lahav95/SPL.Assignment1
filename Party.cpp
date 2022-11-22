@@ -1,6 +1,7 @@
 #include "Party.h"
 #include "Agent.h"
 #include "JoinPolicy.h"
+#include "Simulation.h"
 
 Party::Party(int id, string name, int mandates, JoinPolicy *jp) : mId(id), mName(name), mMandates(mandates), mJoinPolicy(jp), mState(Waiting) 
 {
@@ -38,12 +39,18 @@ void Party::step(Simulation &s)
         if (timer<=2){
             timer++;
         }
-        else{
-            int aToJoin;
-            mJoinPolicy->Join(s,offers);
-            aToJoin= mJoinPolicy->Join(s, offers);
+        else{                   //join a coalition:
+            
+            int aToJoin= mJoinPolicy->Join(s, offers); //returns selected offer (agent)   //JoinPolicy
+            Agent& temp = s.getAgentbyId(aToJoin);
+            int coToJoin= temp.coalitionId;
+            s.mCoalitions.at(coToJoin).addParty(*this , mId);  //add party to coalition  //Coalition
+            
+            // check all
+         
+            s.clone(aToJoin, mId);               //clone agent and update        //simulation
+            
             setState(Joined);
-            //clone
         }    
 
     }
@@ -57,7 +64,6 @@ void Party::setCoalitionId(int id){
     coalitionId = id;
 }
 
-//void Party::clone(){}
 
 void Party:: addOffer(int agentId){
     offers.push_back(agentId);

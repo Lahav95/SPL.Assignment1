@@ -17,6 +17,14 @@ int Agent::getPartyId() const
     return mPartyId;
 }
 
+int Agent::setPartyId(int id){
+    mPartyId = id;
+}
+
+int Agent::setId(int id){
+    mAgentId = id;
+}
+
 void Agent::step(Simulation &sim)
 {
     mSelectionPolicy->select(sim, sim.getAgentbyId(mAgentId));  
@@ -25,11 +33,58 @@ void Agent::step(Simulation &sim)
     
 }
 
-void Agent:: setCoalitionId(int id){
-    coalitionId=id;
+Agent::Agent(const Agent& other) : mAgentId(other.mAgentId),            // copy constructor
+ mPartyId(other.mPartyId), mSelectionPolicy(other.mSelectionPolicy)    
+{
+
+    mAgentId = other.mAgentId;
+    mPartyId = other.mPartyId;
+    mSelectionPolicy = other.mSelectionPolicy; 
+
 }
 
-int Agent:: getCoalitionId(){
-    return coalitionId;
+void Agent::clear(){
+    if (mSelectionPolicy != nullptr){
+        delete(mSelectionPolicy);
+        mSelectionPolicy = nullptr;
+    }
+
 }
 
+Agent& Agent::operator=(const Agent &other) // copy assignment operator
+{
+
+    if (this != &other){
+        mAgentId = other.mAgentId;
+        mPartyId = other.mPartyId;
+        clear();
+        *mSelectionPolicy = *other.mSelectionPolicy; 
+    }
+
+    return *this;
+}
+
+Agent::~Agent(){    // destructor
+
+    clear();
+}
+
+Agent::Agent(Agent&& other) : mAgentId(other.mAgentId),                 // move constructor
+ mPartyId(other.mPartyId), mSelectionPolicy(other.mSelectionPolicy){    
+
+    other.mSelectionPolicy = nullptr;
+
+}
+
+Agent& Agent::operator=(Agent&& other){     // move assignment opeator
+
+    if (this != &other){
+        mAgentId = other.mAgentId;
+        mPartyId = other.mPartyId;
+        mSelectionPolicy = other.mSelectionPolicy;
+        other.mSelectionPolicy = nullptr;
+    }
+
+    return *this;
+
+}

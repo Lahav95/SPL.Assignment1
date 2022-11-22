@@ -34,7 +34,6 @@ public:
     vector <int> offers;
     void addOffer(int agentId);
     int getPartyId();
-//    void clone();
 
 private:
     int mId;

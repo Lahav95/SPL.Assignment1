@@ -23,10 +23,10 @@ public:
     const vector<vector<int>> getPartiesByCoalitions() const;
     Party &getParty1(int partyId);
     Agent &getAgentbyId(int agentId);   // Not necessarily needed
-    void addParty(int coalitionId,int partyId);
-     void addCoalition(); // initialize coalitions list      //NNN
     vector<vector<int>> partiesByCoalitions;
     vector<Coalition> mCoalitions;
+    int newId;
+    void clone(int id, int partyId);
     
 
 

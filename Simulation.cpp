@@ -4,6 +4,8 @@
 
 Simulation::Simulation(Graph graph, vector<Agent> agents) : mGraph(graph), mAgents(agents) 
 {
+    // You can change the implementation of the constructor, but not the signature!
+
     for (Agent a: agents){
         int coalitionId = a.getId();
         int numOfMandates = getParty(a.getPartyId()).getMandates();
@@ -11,9 +13,12 @@ Simulation::Simulation(Graph graph, vector<Agent> agents) : mGraph(graph), mAgen
 
         mCoalitions.push_back(c);       // add coalition to the list in simulation
 
-    //    partiesByCoalitions.push_back(c.lPartiesId);    // add coalition to partiesByCoalition
-        a.coalitionId = coalitionId;            //update coalition Id of agent //NNN
+        partiesByCoalitions.push_back(c.lPartiesId);    // add coalition to partiesByCoalition
+        
+        a.coalitionId = coalitionId;            //update coalition Id of agent 
     }
+
+    newId = agents.size();      // counter for new agent objects
 }
 
 void Simulation::step()
@@ -72,7 +77,6 @@ Party &Simulation::getParty1(int partyId)
 /// At the simulation initialization - the result will be [[agent0.partyId], [agent1.partyId], ...]
 const vector<vector<int>> Simulation::getPartiesByCoalitions() const
 {
-    // TODO: you MUST implement this method for getting proper output, read the documentation above.
     return vector<vector<int>>();
 }
 
@@ -85,15 +89,13 @@ Agent &Simulation::getAgentbyId(int agentId)
 
 }
 
-void Simulation::addParty(int coalitionId, int partyId){      //NNN
-    
-    // partiesByCoalitions.at(coalitionId).push_back(partyId);
+void Simulation:: clone(int id, int partyId){
+    Agent clone (getAgentbyId(id));
+    clone.setId(newId);
+    clone.setPartyId(partyId);
+    newId++;
+    mAgents.push_back(clone);
+
+}
 
 
-    // coalitionParties.push_back(party);
-    // numOfMandates = numOfMandates+party.getMandates();
-    //  _p.setCoalitionId(mCoalition);
- //  thisSim.partiesByCoalitions.at(mCoalition).push_back(_p.getPartyId());
-   // clone
-
-}  

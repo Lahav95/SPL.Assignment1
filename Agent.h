@@ -15,14 +15,22 @@ public:
     int getId() const;
     void step(Simulation &);
 
-    int coalitionId; //NNN
-    int i=0;                    //NNN
-    int& numOfMandates = i;     //NNN
-    void setNumOfM(int);        //NNN
-    void setCoalitionId(int); //?
-    int getCoalitionId(); //?
+    int setPartyId(int);
+    int setId(int);
+    int coalitionId; 
 
-    
+    void clear();
+
+    // rule of 3
+    Agent(const Agent& other);  // copy constructor
+    Agent& operator=(const Agent& other);  // copy assignment operator
+    ~Agent();   // destructor
+
+    // rule of 5
+    Agent(Agent&& other);   // move constructor
+    Agent& operator=(Agent&& other);    // move assignment operator
+
+
 private:
     int mAgentId;
     int mPartyId;
