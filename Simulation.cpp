@@ -33,13 +33,13 @@ bool Simulation::shouldTerminate() const
 
     while (!toEnd)
     {
-        for (int i = 0; i<mCoalitions.size(); i++) {
+        for (int i = 0; i<mCoalitions.size() & !toEnd; i++) {
             if (mCoalitions.at(i).numOfMandates > 60)
                 toEnd = true;
         }
 
     
-        for (int i=0; i< mGraph.getNumVertices(); i++){
+        for (int i=0; i< mGraph.getNumVertices() & !toEnd; i++){
             if (getParty(i).getState() != Joined)
                 toEnd = true;
         }
