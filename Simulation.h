@@ -23,10 +23,8 @@ public:
     const Party &getParty(int partyId) const;
     const vector<vector<int>> getPartiesByCoalitions() const;
 
-
     Party &getParty1(int partyId);
     vector<Agent> &getAgents2();
-
 
     vector<vector<int>> partiesByCoalitions;
 
@@ -36,7 +34,7 @@ public:
 
     int newId;
 
-    void clone(int id, int partyId, SelectionPolicy *mSelectionPolicy);
+    void clone(int id, int partyId);
 
 private:
     Graph mGraph;

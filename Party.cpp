@@ -3,37 +3,43 @@
 #include "JoinPolicy.h"
 #include "Simulation.h"
 
-Party::Party(int id, string name, int mandates, JoinPolicy *jp) : timer(), coalitionId(), offers({}), mId(id), mName(name), mMandates(mandates), mJoinPolicy(jp), mState(Waiting) { }
+//Party::Party(): mId(-1), mName("_"), mJoinPolicy(&LastOfferJoinPolicy()) {}
+
+Party::Party(int id, string name, int mandates, JoinPolicy *jp) : timer(), coalitionId(), offers({}), mId(id), mName(name), mMandates(mandates), mJoinPolicy(jp), mState(Waiting)
+{
+}
 
 void Party:: clear(){
-    if(mJoinPolicy != nullptr){
-        delete(mJoinPolicy);
-        mJoinPolicy = nullptr;
-    }
+    // if(mJoinPolicy != nullptr)
+    //     delete(mJoinPolicy);
+    mJoinPolicy = nullptr;
 }
 
 //destructor
 Party::~Party(){
-    clear();
+    if(mJoinPolicy) delete mJoinPolicy;
 }
 
 //copy constructor
 Party::Party(const Party& other): timer(other.timer), coalitionId(other.coalitionId), offers(other.offers),
-            mId(other.mId), mName(other.mName),mMandates(other.mMandates), mJoinPolicy(other.mJoinPolicy), mState(other.mState){}
+            mId(other.mId), mName(other.mName),mMandates(other.mMandates), mJoinPolicy(other.mJoinPolicy->duplicate()), mState(other.mState){}
 
 
 //copy assignment operator
 Party& Party::operator=(const Party& other){
 
-    if (this != &other) { // if this is the same as other. do nothing.
-        clear();
+    if (this != &other) { 
         timer = other.timer;
         coalitionId = other.coalitionId;
         offers = other.offers;
         mId = other.mId;
         mName = other.mName;
         mMandates = other.mMandates;
-        mJoinPolicy = other.mJoinPolicy;
+        if(mJoinPolicy){
+            delete mJoinPolicy;
+            mJoinPolicy = nullptr;
+        }
+        mJoinPolicy = other.mJoinPolicy->duplicate();
     }   
     return *this;
 
@@ -100,7 +106,7 @@ void Party::step(Simulation &s)
             
             // check all
          
-            s.clone(aToJoin, mId, s.getAgentbyId(mId).getSelectionPolicy());               //clone agent and update        //simulation
+            s.clone(aToJoin, mId);               //clone agent and update        //simulation
             
             setState(Joined);
         }    

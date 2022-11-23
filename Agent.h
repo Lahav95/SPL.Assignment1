@@ -20,11 +20,10 @@ public:
     Agent(Agent&& other);   // move constructor
     Agent& operator=(Agent&& other);    // move assignment operator
 
-    void clear();
+   void clear();
 
     int getPartyId() const;
     int getId() const;
-    SelectionPolicy* getSelectionPolicy();
     void step(Simulation &);
 
     
@@ -32,7 +31,6 @@ public:
     
     void setPartyId(int);
     void setId(int);
-    void setSelectionPolicy(SelectionPolicy *selectionPolicy);
 
 
 private:

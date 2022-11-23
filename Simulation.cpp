@@ -40,19 +40,19 @@ bool Simulation::shouldTerminate() const
 {
     bool toEnd= false;
     int j= mCoalitions.size();
-    while (!toEnd)
-    {
-        for (int i = 0; i< j && !toEnd; i++) {
-            if (mCoalitions.at(i).numOfMandates > 60)
-                toEnd = true;
-        }
+     for (int i = 0; i< j && !toEnd; i++) {
+        if (mCoalitions.at(i).numOfMandates > 60)
+             return true;
+     }
 
+    toEnd = true;
     
-        for (int i=0; i< mGraph.getNumVertices() && !toEnd; i++){
-            if (getParty(i).getState() != Joined)
-                toEnd = true;
-        }
+    for (int i=0; i< mGraph.getNumVertices(); i++){
+        if (getParty(i).getState() != Joined)
+            return false;
+            
     }
+
     
     return toEnd;
 }
@@ -97,11 +97,10 @@ Agent &Simulation::getAgentbyId(int agentId)       // Not necessarily needed
     return temp.at(agentId);   
 }
 
-void Simulation:: clone(int id, int partyId, SelectionPolicy *mSelectionPolicy){
+void Simulation:: clone(int id, int partyId){
     Agent clone (getAgentbyId(id));
     clone.setId(newId);
     clone.setPartyId(partyId);
-    clone.setSelectionPolicy(mSelectionPolicy);
     newId++;
     mAgents.push_back(clone);
 

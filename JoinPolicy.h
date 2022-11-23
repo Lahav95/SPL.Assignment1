@@ -9,21 +9,22 @@ class Party;
 
 class JoinPolicy {
     public:
-        virtual ~JoinPolicy(){};
+        virtual ~JoinPolicy()=default;
         virtual int Join(Simulation& sim, vector<int> offerList)=0;
+
+        virtual JoinPolicy* duplicate()=0;
     
 };
 
 class MandatesJoinPolicy : public JoinPolicy {
     public:
-        MandatesJoinPolicy();
-        virtual ~MandatesJoinPolicy();
         virtual int Join(Simulation& sim, vector<int> offerList); 
+        virtual JoinPolicy* duplicate();
 };
 
 class LastOfferJoinPolicy : public JoinPolicy {
     public:
-        LastOfferJoinPolicy();
-        virtual ~LastOfferJoinPolicy();
         virtual int Join(Simulation &sim, vector<int> offerList);
+        virtual JoinPolicy* duplicate();
+
 };

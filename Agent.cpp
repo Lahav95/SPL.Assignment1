@@ -10,15 +10,15 @@ Agent::Agent(int agentId, int partyId, SelectionPolicy *selectionPolicy) : coali
 
 //copy constructor
 Agent::Agent(const Agent& other): coalitionId(), mAgentId(other.mAgentId), mPartyId(other.mPartyId), 
-                                    mSelectionPolicy(other.mSelectionPolicy) {}
+                                    mSelectionPolicy(other.mSelectionPolicy->duplicate()) {}
 
 
 
 void Agent::clear(){
-    if (mSelectionPolicy != nullptr){
-        delete(mSelectionPolicy);
+    // if (mSelectionPolicy != nullptr){
+    //     delete(mSelectionPolicy);
         mSelectionPolicy = nullptr;
-    }
+//}
 
 }
 
@@ -38,7 +38,7 @@ Agent& Agent::operator=(const Agent &other) // copy assignment operator
 
 Agent::~Agent(){    // destructor
 
-    clear();
+    if(mSelectionPolicy) delete mSelectionPolicy;
 }
 
 Agent::Agent(Agent&& other) : coalitionId(other.coalitionId), mAgentId(other.mAgentId),                 // move constructor
@@ -54,7 +54,7 @@ Agent& Agent::operator=(Agent&& other){     // move assignment opeator
         coalitionId = other.coalitionId;
         mAgentId = other.mAgentId;
         mPartyId = other.mPartyId;
-        mSelectionPolicy = other.mSelectionPolicy;
+        mSelectionPolicy = other.mSelectionPolicy->duplicate();
         other.mSelectionPolicy = nullptr;
     }
 
@@ -72,10 +72,6 @@ int Agent::getPartyId() const
     return mPartyId;
 }
 
-SelectionPolicy* Agent::getSelectionPolicy()
-{
-    return mSelectionPolicy;
-}
 void Agent:: setPartyId(int id){
     mPartyId = id;
 }
@@ -84,13 +80,24 @@ void Agent:: setId(int id){
     mAgentId = id;
 }
 
-void Agent::setSelectionPolicy(SelectionPolicy *selectionPolicy){
-    mSelectionPolicy = selectionPolicy;
-}
-
 
 void Agent::step(Simulation &sim)
 {
+    vector<int> validParties;
+    for (int i = 0; i < sim.getGraph().getNumVertices(); i++){
+        if (i != mPartyId && sim.getGraph().getEdgeWeight(mPartyId, i) > 0)
+            if (sim.getParty(i).getState() != Joined){
+                bool offered = false;
+                for(const int agent: sim.getParty(i).offers){
+                    if (sim.getParty(agent).coalitionId == sim.getParty(mPartyId).coalitionId)
+                        offered = true;
+                }
+                if (!offered)
+                    validParties.push_back(i);
+            }
+    }
+
+
     mSelectionPolicy->select(sim, sim.getAgentbyId(mAgentId));  
     if (sim.getParty(mPartyId).getState() == Waiting) 
         sim.getParty1(mPartyId).setState(CollectingOffers);

@@ -28,7 +28,7 @@ public:
     ~Party();
     Party(Party&& other);
     Party& operator=(Party&& other);
-    void clear();
+   void clear();
 
     State getState() const;
     void setState(State state);

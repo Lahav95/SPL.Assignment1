@@ -3,8 +3,6 @@
 #include "Simulation.h"
 
 
-MandatesJoinPolicy::MandatesJoinPolicy(){};
-MandatesJoinPolicy::~MandatesJoinPolicy(){};
 int MandatesJoinPolicy::Join(Simulation& sim, vector<int> offerList){
     int maxMan;
     int answerId;
@@ -19,10 +17,16 @@ int MandatesJoinPolicy::Join(Simulation& sim, vector<int> offerList){
     return answerId;
 }
 
-LastOfferJoinPolicy::LastOfferJoinPolicy(){};
-LastOfferJoinPolicy::~LastOfferJoinPolicy(){};
+JoinPolicy* MandatesJoinPolicy::duplicate(){
+    return new MandatesJoinPolicy(*this);
+}
+
 int LastOfferJoinPolicy::Join(Simulation& sim, vector<int> offerList){
 
     int a = offerList.back() ;
-    return a;
+    return a;   
+}
+
+JoinPolicy* LastOfferJoinPolicy::duplicate(){
+    return new LastOfferJoinPolicy(*this);
 }
