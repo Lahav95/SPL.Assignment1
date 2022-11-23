@@ -1,8 +1,11 @@
 #include "Simulation.h"
-#include "Coalition.h"
 #include "Agent.h"
+#include <vector>
 
-Simulation::Simulation(Graph graph, vector<Agent> agents) : mGraph(graph), mAgents(agents) 
+
+using std::vector;
+
+Simulation::Simulation(Graph graph, vector<Agent> agents) : partiesByCoalitions({}), mCoalitions({}), newId(), mGraph(graph), mAgents(agents) 
 {
     // You can change the implementation of the constructor, but not the signature!
 
@@ -21,30 +24,31 @@ Simulation::Simulation(Graph graph, vector<Agent> agents) : mGraph(graph), mAgen
     newId = agents.size();      // counter for new agent objects
 }
 
+
 void Simulation::step()
 {
   for (int i = 0; i<mGraph.getNumVertices(); i++){
     getParty1(i).step(*this); 
   }
 
-  for (Agent agent: mAgents){
-    agent.step(*this);
+  for (Agent a: mAgents){
+    a.step(*this);
   }
 }
 
 bool Simulation::shouldTerminate() const
 {
     bool toEnd= false;
-
+    int j= mCoalitions.size();
     while (!toEnd)
     {
-        for (int i = 0; i<mCoalitions.size() & !toEnd; i++) {
+        for (int i = 0; i< j && !toEnd; i++) {
             if (mCoalitions.at(i).numOfMandates > 60)
                 toEnd = true;
         }
 
     
-        for (int i=0; i< mGraph.getNumVertices() & !toEnd; i++){
+        for (int i=0; i< mGraph.getNumVertices() && !toEnd; i++){
             if (getParty(i).getState() != Joined)
                 toEnd = true;
         }
@@ -63,6 +67,11 @@ const vector<Agent> &Simulation::getAgents() const
     return mAgents;
 }
 
+ vector<Agent> &Simulation::getAgents2() 
+{
+    return mAgents;
+}
+
 const Party &Simulation::getParty(int partyId) const
 {
     return mGraph.getParty(partyId);
@@ -77,25 +86,23 @@ Party &Simulation::getParty1(int partyId)
 /// At the simulation initialization - the result will be [[agent0.partyId], [agent1.partyId], ...]
 const vector<vector<int>> Simulation::getPartiesByCoalitions() const
 {
-    return vector<vector<int>>();
+    // TODO: you MUST implement this method for getting proper output, read the documentation above.
+
+    return partiesByCoalitions;     //check
 }
 
-Agent &Simulation::getAgentbyId(int agentId)       
+Agent &Simulation::getAgentbyId(int agentId)       // Not necessarily needed
 {
-
-    for(Agent agent: mAgents)
-        if (agent.getId() == agentId)
-            return agent;
-
+    vector<Agent>& temp = getAgents2();
+    return temp.at(agentId);   
 }
 
-void Simulation:: clone(int id, int partyId){
+void Simulation:: clone(int id, int partyId, SelectionPolicy *mSelectionPolicy){
     Agent clone (getAgentbyId(id));
     clone.setId(newId);
     clone.setPartyId(partyId);
+    clone.setSelectionPolicy(mSelectionPolicy);
     newId++;
     mAgents.push_back(clone);
 
 }
-
-

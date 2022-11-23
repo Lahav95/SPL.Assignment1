@@ -2,8 +2,8 @@
 
 #include <vector>
 
-class Simulation;
 class Coalition;
+class Simulation;
 class SelectionPolicy;
 
 class Agent
@@ -11,24 +11,28 @@ class Agent
 public:
     Agent(int agentId, int partyId, SelectionPolicy *selectionPolicy);
 
-    int getPartyId() const;
-    int getId() const;
-    void step(Simulation &);
-
-    int setPartyId(int);
-    int setId(int);
-    int coalitionId; 
-
-    void clear();
-
-    // rule of 3
-    Agent(const Agent& other);  // copy constructor
+   // rule of 3
+    Agent(const Agent& agent);  // copy constructor
     Agent& operator=(const Agent& other);  // copy assignment operator
     ~Agent();   // destructor
 
     // rule of 5
     Agent(Agent&& other);   // move constructor
     Agent& operator=(Agent&& other);    // move assignment operator
+
+    void clear();
+
+    int getPartyId() const;
+    int getId() const;
+    SelectionPolicy* getSelectionPolicy();
+    void step(Simulation &);
+
+    
+    int coalitionId; 
+    
+    void setPartyId(int);
+    void setId(int);
+    void setSelectionPolicy(SelectionPolicy *selectionPolicy);
 
 
 private:

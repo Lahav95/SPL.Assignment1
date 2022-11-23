@@ -29,7 +29,6 @@ MandatesSelectionPolicy::~MandatesSelectionPolicy(){};
 void MandatesSelectionPolicy::select(Simulation &sim, Agent agent){
 
     int maxVal = 0;
-    int i;
     const int agentId = agent.getId();
 
     for (int i = 0; i < sim.getGraph().getNumVertices(); i++)

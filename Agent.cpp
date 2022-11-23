@@ -2,46 +2,17 @@
 #include "Simulation.h"
 #include "SelectionPolicy.h"
 
-Agent::Agent(int agentId, int partyId, SelectionPolicy *selectionPolicy) : mAgentId(agentId), mPartyId(partyId), mSelectionPolicy(selectionPolicy)
+Agent::Agent(int agentId, int partyId, SelectionPolicy *selectionPolicy) : coalitionId(), mAgentId(agentId), mPartyId(partyId), mSelectionPolicy(selectionPolicy) 
 {
     // You can change the implementation of the constructor, but not the signature!
+   // mCoalition= Coalition m();
 }
 
-int Agent::getId() const
-{
-    return mAgentId;
-}
+//copy constructor
+Agent::Agent(const Agent& other): coalitionId(), mAgentId(other.mAgentId), mPartyId(other.mPartyId), 
+                                    mSelectionPolicy(other.mSelectionPolicy) {}
 
-int Agent::getPartyId() const
-{
-    return mPartyId;
-}
 
-int Agent::setPartyId(int id){
-    mPartyId = id;
-}
-
-int Agent::setId(int id){
-    mAgentId = id;
-}
-
-void Agent::step(Simulation &sim)
-{
-    mSelectionPolicy->select(sim, sim.getAgentbyId(mAgentId));  
-    if (sim.getParty(mPartyId).getState() == Waiting) 
-        sim.getParty1(mPartyId).setState(CollectingOffers);
-    
-}
-
-Agent::Agent(const Agent& other) : mAgentId(other.mAgentId),            // copy constructor
- mPartyId(other.mPartyId), mSelectionPolicy(other.mSelectionPolicy)    
-{
-
-    mAgentId = other.mAgentId;
-    mPartyId = other.mPartyId;
-    mSelectionPolicy = other.mSelectionPolicy; 
-
-}
 
 void Agent::clear(){
     if (mSelectionPolicy != nullptr){
@@ -55,9 +26,10 @@ Agent& Agent::operator=(const Agent &other) // copy assignment operator
 {
 
     if (this != &other){
+        clear();
+        coalitionId = other.coalitionId;
         mAgentId = other.mAgentId;
         mPartyId = other.mPartyId;
-        clear();
         *mSelectionPolicy = *other.mSelectionPolicy; 
     }
 
@@ -69,7 +41,7 @@ Agent::~Agent(){    // destructor
     clear();
 }
 
-Agent::Agent(Agent&& other) : mAgentId(other.mAgentId),                 // move constructor
+Agent::Agent(Agent&& other) : coalitionId(other.coalitionId), mAgentId(other.mAgentId),                 // move constructor
  mPartyId(other.mPartyId), mSelectionPolicy(other.mSelectionPolicy){    
 
     other.mSelectionPolicy = nullptr;
@@ -79,6 +51,7 @@ Agent::Agent(Agent&& other) : mAgentId(other.mAgentId),                 // move 
 Agent& Agent::operator=(Agent&& other){     // move assignment opeator
 
     if (this != &other){
+        coalitionId = other.coalitionId;
         mAgentId = other.mAgentId;
         mPartyId = other.mPartyId;
         mSelectionPolicy = other.mSelectionPolicy;
@@ -87,4 +60,39 @@ Agent& Agent::operator=(Agent&& other){     // move assignment opeator
 
     return *this;
 
+}
+
+int Agent::getId() const
+{
+    return mAgentId;
+}
+
+int Agent::getPartyId() const
+{
+    return mPartyId;
+}
+
+SelectionPolicy* Agent::getSelectionPolicy()
+{
+    return mSelectionPolicy;
+}
+void Agent:: setPartyId(int id){
+    mPartyId = id;
+}
+
+void Agent:: setId(int id){
+    mAgentId = id;
+}
+
+void Agent::setSelectionPolicy(SelectionPolicy *selectionPolicy){
+    mSelectionPolicy = selectionPolicy;
+}
+
+
+void Agent::step(Simulation &sim)
+{
+    mSelectionPolicy->select(sim, sim.getAgentbyId(mAgentId));  
+    if (sim.getParty(mPartyId).getState() == Waiting) 
+        sim.getParty1(mPartyId).setState(CollectingOffers);
+    
 }

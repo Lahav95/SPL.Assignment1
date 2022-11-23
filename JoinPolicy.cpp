@@ -1,9 +1,6 @@
-#pragma once
 #include "JoinPolicy.h"
 #include "Agent.h"
 #include "Simulation.h"
-
-
 
 
 MandatesJoinPolicy::MandatesJoinPolicy(){};

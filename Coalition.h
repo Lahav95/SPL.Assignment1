@@ -15,19 +15,16 @@ class Coalition
 public:
 
         Coalition();
-
+        
         Coalition(int, int);
 
         int mCoalition;
         int numOfMandates;
 
-
-        
-
         void addParty(Party& _p, int partyId);  
-        int getMandates(int CoalitionId);
-        
 
-       vector<int> lPartiesId;      // parties of this coalition
+        int getMandates(int CoalitionId);        
+
+        vector<int> lPartiesId;      // parties of this coalition
 
 };

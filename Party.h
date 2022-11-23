@@ -23,17 +23,29 @@ class Party
 public:
     Party(int id, string name, int mandates, JoinPolicy *); 
 
+    Party(const Party &other);
+    Party &operator=(const Party &other);
+    ~Party();
+    Party(Party&& other);
+    Party& operator=(Party&& other);
+    void clear();
+
     State getState() const;
     void setState(State state);
     int getMandates() const;
     void step(Simulation &s);
     const string &getName() const;
+
+
     int timer;
-    int coalitionId = -1;
+
+    int coalitionId;
     void setCoalitionId(int);
+    int getPartyId();
+
     vector <int> offers;
     void addOffer(int agentId);
-    int getPartyId();
+    
 
 private:
     int mId;

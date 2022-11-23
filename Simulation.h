@@ -9,6 +9,7 @@
 using std::string;
 using std::vector;
 
+
 class Simulation
 {
 public:
@@ -21,14 +22,21 @@ public:
     const vector<Agent> &getAgents() const;
     const Party &getParty(int partyId) const;
     const vector<vector<int>> getPartiesByCoalitions() const;
-    Party &getParty1(int partyId);
-    Agent &getAgentbyId(int agentId);   // Not necessarily needed
-    vector<vector<int>> partiesByCoalitions;
-    vector<Coalition> mCoalitions;
-    int newId;
-    void clone(int id, int partyId);
-    
 
+
+    Party &getParty1(int partyId);
+    vector<Agent> &getAgents2();
+
+
+    vector<vector<int>> partiesByCoalitions;
+
+    vector<Coalition> mCoalitions;
+
+    Agent &getAgentbyId(int agentId);
+
+    int newId;
+
+    void clone(int id, int partyId, SelectionPolicy *mSelectionPolicy);
 
 private:
     Graph mGraph;
