@@ -88,7 +88,7 @@ void Party::step(Simulation &s)
         if (timer<=2){
             timer++;
         }
-        else{                   //join a coalition:
+        if (timer == 3){                   //join a coalition:
             
             int aToJoin= mJoinPolicy->Join(s, offers); //returns selected offer (agent)   //JoinPolicy
             Agent& temp = s.getAgentbyId(aToJoin);

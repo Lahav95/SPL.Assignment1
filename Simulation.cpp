@@ -15,7 +15,7 @@ Simulation::Simulation(Graph graph, vector<Agent> agents) : partiesByCoalitions(
         Coalition c (coalitionId);       //creates a coalition object
         c.addParty(getParty1(partyId), partyId);
         mCoalitions.push_back(c);       // add coalition to the list in simulation
-        
+        partiesByCoalitions.push_back(c.lPartiesId);
         getAgents2()[coalitionId].coalitionId = coalitionId;            //update coalition Id of agent 
     }
 
@@ -32,6 +32,7 @@ void Simulation::step()
   for (Agent a: mAgents){
     a.step(*this);
   }
+  addCoalitions();
 }
 
 bool Simulation::shouldTerminate() const
@@ -39,8 +40,9 @@ bool Simulation::shouldTerminate() const
     bool toEnd= false;
     int j= mCoalitions.size();
      for (int i = 0; i< j && !toEnd; i++) {
-        if (mCoalitions.at(i).numOfMandates > 60)
-             return true;
+        if (mCoalitions.at(i).numOfMandates > 60){
+            return true;
+        }
      }
 
     toEnd = true;
@@ -85,7 +87,7 @@ Party &Simulation::getParty1(int partyId)
 const vector<vector<int>> Simulation::getPartiesByCoalitions() const
 {
     // TODO: you MUST implement this method for getting proper output, read the documentation above.
-
+    
     return partiesByCoalitions;     //check
 }
 
@@ -106,6 +108,6 @@ void Simulation:: clone(int id, int partyId){
 
 void Simulation::addCoalitions(){
     for (Coalition c: mCoalitions)
-        partiesByCoalitions.push_back(c.lPartiesId);
+        partiesByCoalitions.at(c.mCoalition).swap(c.lPartiesId);
 }
 
