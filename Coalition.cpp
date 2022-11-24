@@ -3,8 +3,9 @@
 #include "Simulation.h"
 
 
-Coalition::Coalition(int Id, int numOfMandates) : mCoalition(Id),
-                     numOfMandates(numOfMandates), lPartiesId({}){
+//Coalition::Coalition(): mCoalition(-1), numOfMandates(-1)  {}  //default constructor
+
+Coalition::Coalition(int agentId) : mCoalition(agentId), numOfMandates(0), lPartiesId({}){
 
 }
 
@@ -18,3 +19,9 @@ void Coalition::addParty(Party& _p, int pId){
    int Coalition::getMandates(int CoalitionId){
       return numOfMandates;
    }
+
+
+
+
+
+

@@ -11,14 +11,12 @@ Simulation::Simulation(Graph graph, vector<Agent> agents) : partiesByCoalitions(
 
     for (Agent a: agents){
         int coalitionId = a.getId();
-        int numOfMandates = getParty(a.getPartyId()).getMandates();
-        Coalition c (coalitionId, numOfMandates);       //creates a coalition object
-
+        int partyId = a.getPartyId();
+        Coalition c (coalitionId);       //creates a coalition object
+        c.addParty(getParty1(partyId), partyId);
         mCoalitions.push_back(c);       // add coalition to the list in simulation
-
-        partiesByCoalitions.push_back(c.lPartiesId);    // add coalition to partiesByCoalition
         
-        a.coalitionId = coalitionId;            //update coalition Id of agent 
+        getAgents2()[coalitionId].coalitionId = coalitionId;            //update coalition Id of agent 
     }
 
     newId = agents.size();      // counter for new agent objects
@@ -105,3 +103,9 @@ void Simulation:: clone(int id, int partyId){
     mAgents.push_back(clone);
 
 }
+
+void Simulation::addCoalitions(){
+    for (Coalition c: mCoalitions)
+        partiesByCoalitions.push_back(c.lPartiesId);
+}
+

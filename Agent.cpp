@@ -2,35 +2,25 @@
 #include "Simulation.h"
 #include "SelectionPolicy.h"
 
-Agent::Agent(int agentId, int partyId, SelectionPolicy *selectionPolicy) : coalitionId(), mAgentId(agentId), mPartyId(partyId), mSelectionPolicy(selectionPolicy) 
-{
-    // You can change the implementation of the constructor, but not the signature!
-   // mCoalition= Coalition m();
-}
+
+
+Agent::Agent(int agentId, int partyId, SelectionPolicy *selectionPolicy) : coalitionId(-1), mAgentId(agentId), mPartyId(partyId), mSelectionPolicy(selectionPolicy) { }
 
 //copy constructor
-Agent::Agent(const Agent& other): coalitionId(), mAgentId(other.mAgentId), mPartyId(other.mPartyId), 
+Agent::Agent(const Agent& other): coalitionId(other.coalitionId), mAgentId(other.mAgentId), mPartyId(other.mPartyId), 
                                     mSelectionPolicy(other.mSelectionPolicy->duplicate()) {}
 
-
-
-void Agent::clear(){
-    // if (mSelectionPolicy != nullptr){
-    //     delete(mSelectionPolicy);
-        mSelectionPolicy = nullptr;
-//}
-
-}
 
 Agent& Agent::operator=(const Agent &other) // copy assignment operator
 {
 
     if (this != &other){
-        clear();
+        if(mSelectionPolicy)
+            delete mSelectionPolicy;
         coalitionId = other.coalitionId;
         mAgentId = other.mAgentId;
         mPartyId = other.mPartyId;
-        *mSelectionPolicy = *other.mSelectionPolicy; 
+        mSelectionPolicy = other.mSelectionPolicy->duplicate(); 
     }
 
     return *this;
@@ -83,23 +73,25 @@ void Agent:: setId(int id){
 
 void Agent::step(Simulation &sim)
 {
-    vector<int> validParties;
+     vector<int> validParties; 
     for (int i = 0; i < sim.getGraph().getNumVertices(); i++){
-        if (i != mPartyId && sim.getGraph().getEdgeWeight(mPartyId, i) > 0)
-            if (sim.getParty(i).getState() != Joined){
-                bool offered = false;
-                for(const int agent: sim.getParty(i).offers){
-                    if (sim.getParty(agent).coalitionId == sim.getParty(mPartyId).coalitionId)
-                        offered = true;
+        bool offered = true;
+        if (i != mPartyId && sim.getGraph().getEdgeWeight(mPartyId, i) > 0)     // not this & connected
+            if (sim.getParty(i).getState() != Joined){      //not joined
+                for(int agent: sim.getParty(i).offers){
+                    if (sim.getAgentbyId(agent).coalitionId == (*this).coalitionId)    // offered by the same coalition
+                        offered = false;
                 }
-                if (!offered)
-                    validParties.push_back(i);
+            
+                if (offered)
+                    validParties.push_back(i);  // all checked, optional party
             }
     }
 
-
-    mSelectionPolicy->select(sim, sim.getAgentbyId(mAgentId));  
-    if (sim.getParty(mPartyId).getState() == Waiting) 
-        sim.getParty1(mPartyId).setState(CollectingOffers);
-    
-}
+    if(!validParties.empty()){      // optional party exist
+        int i = mSelectionPolicy->select(sim, sim.getAgentbyId(mAgentId), validParties);  // return selected party id & add offer to it
+        sim.getParty1(i).addOffer(mAgentId);
+        if (sim.getParty(i).getState() == Waiting) 
+            sim.getParty1(i).setState(CollectingOffers);    // update party state
+    }
+}       //check sending agent by object / maybe send only ID

@@ -2,6 +2,8 @@
 
 #include <vector>
 
+using std:: vector;
+
 class Coalition;
 class Simulation;
 class SelectionPolicy;
@@ -20,12 +22,9 @@ public:
     Agent(Agent&& other);   // move constructor
     Agent& operator=(Agent&& other);    // move assignment operator
 
-   void clear();
-
     int getPartyId() const;
     int getId() const;
     void step(Simulation &);
-
     
     int coalitionId; 
     

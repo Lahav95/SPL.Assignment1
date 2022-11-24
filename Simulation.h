@@ -23,8 +23,11 @@ public:
     const Party &getParty(int partyId) const;
     const vector<vector<int>> getPartiesByCoalitions() const;
 
+
     Party &getParty1(int partyId);
     vector<Agent> &getAgents2();
+    void addCoalitions();
+
 
     vector<vector<int>> partiesByCoalitions;
 

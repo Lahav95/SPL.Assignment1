@@ -15,8 +15,8 @@ class Coalition
 public:
 
         Coalition();
-        
-        Coalition(int, int);
+
+        Coalition(int agentId);
 
         int mCoalition;
         int numOfMandates;

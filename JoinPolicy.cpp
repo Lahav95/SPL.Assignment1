@@ -4,13 +4,14 @@
 
 
 int MandatesJoinPolicy::Join(Simulation& sim, vector<int> offerList){
-    int maxMan;
-    int answerId;
+    int answerId = offerList[0];
+    int coalitionId= sim.getAgentbyId(answerId).coalitionId;
+    int maxMandates = sim.mCoalitions.at(coalitionId).numOfMandates;        //instead of numMandates of agent
     for(int a: offerList){
         int cId= sim.getAgentbyId(a).coalitionId;
-        int temp= sim.mCoalitions.at(cId).numOfMandates;        //instead of numMandates of agent
-        if (temp > maxMan){
-            maxMan = maxMan;
+        int mandates = sim.mCoalitions.at(cId).numOfMandates;        //instead of numMandates of agent
+        if (mandates > maxMandates){
+            maxMandates = mandates;
             answerId = a;
         }
     }
@@ -24,7 +25,7 @@ JoinPolicy* MandatesJoinPolicy::duplicate(){
 int LastOfferJoinPolicy::Join(Simulation& sim, vector<int> offerList){
 
     int a = offerList.back() ;
-    return a;   
+    return a;
 }
 
 JoinPolicy* LastOfferJoinPolicy::duplicate(){

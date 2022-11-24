@@ -3,17 +3,8 @@
 #include "JoinPolicy.h"
 #include "Simulation.h"
 
-//Party::Party(): mId(-1), mName("_"), mJoinPolicy(&LastOfferJoinPolicy()) {}
 
-Party::Party(int id, string name, int mandates, JoinPolicy *jp) : timer(), coalitionId(), offers({}), mId(id), mName(name), mMandates(mandates), mJoinPolicy(jp), mState(Waiting)
-{
-}
-
-void Party:: clear(){
-    // if(mJoinPolicy != nullptr)
-    //     delete(mJoinPolicy);
-    mJoinPolicy = nullptr;
-}
+Party::Party(int id, string name, int mandates, JoinPolicy *jp) : timer(), coalitionId(-1), offers({}), mId(id), mName(name), mMandates(mandates), mJoinPolicy(jp), mState(Waiting){ }
 
 //destructor
 Party::~Party(){
@@ -37,7 +28,7 @@ Party& Party::operator=(const Party& other){
         mMandates = other.mMandates;
         if(mJoinPolicy){
             delete mJoinPolicy;
-            mJoinPolicy = nullptr;
+            // mJoinPolicy = nullptr;
         }
         mJoinPolicy = other.mJoinPolicy->duplicate();
     }   
@@ -53,7 +44,7 @@ Party::Party(Party&& other):  timer(other.timer), coalitionId(other.coalitionId)
 
 //move assignment operator
 Party& Party::operator=(Party&& other){
-    clear();
+  //  clear();
     timer = other.timer;
     coalitionId = other.coalitionId;
     offers = other.offers;
@@ -109,6 +100,7 @@ void Party::step(Simulation &s)
             s.clone(aToJoin, mId);               //clone agent and update        //simulation
             
             setState(Joined);
+            
         }    
 
     }
@@ -125,4 +117,5 @@ void Party::setCoalitionId(int id){
 
 void Party:: addOffer(int agentId){
     offers.push_back(agentId);
+    
 }

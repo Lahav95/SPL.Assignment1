@@ -4,18 +4,19 @@
 
 using std::vector;
 
-void MandatesSelectionPolicy::select(Simulation &sim, Agent agent, vector<int> validParties){
+int MandatesSelectionPolicy::select(Simulation &sim, Agent agent, vector<int> validParties){
 
     int maxVal = 0;
+    int maxParty = -1;
     const int agentId = agent.getId();
+    for (int j: validParties)   //change to validparties size?  *maybe for each
+        if (sim.getParty(j).getMandates() > maxVal){    // update max
+           maxVal = sim.getParty(j).getMandates();
+            maxParty = j;
+        }
 
-    for (int i = 0; i < sim.getGraph().getNumVertices(); i++)
-        if (i != agent.getPartyId()) 
-            if (sim.getParty(i).getMandates() > maxVal)
-                maxVal = sim.getParty(i).getMandates();
-
-    sim.getParty1(agent.getId()).offers.push_back(agentId);
-
+    sim.getParty1(maxParty).offers.push_back(agentId);  //add offer to selected party
+    return maxParty;
 }
 
 SelectionPolicy* MandatesSelectionPolicy::duplicate(){
@@ -23,18 +24,19 @@ SelectionPolicy* MandatesSelectionPolicy::duplicate(){
 };
 
 
-void EdgeWeightSelectionPolicy::select(Simulation &sim, Agent agent, vector<int> validParties){
+int EdgeWeightSelectionPolicy::select(Simulation &sim, Agent agent, vector<int> validParties){
 
     int maxVal = 0;
-    int i;
-    const int agentId = agent.getId();
+    int maxParty = validParties[0];      // ? optional party number one (maybe only)
+    for (int i: validParties){
+        int temp = sim.getGraph().getEdgeWeight(i, agent.getPartyId());
+        if (temp > maxVal){     //update max
+                maxVal = temp;
+                maxParty = i;
+            }
+    }
 
-    for (i = 0; i < sim.getGraph().getNumVertices(); i++)
-        if (i != agent.getPartyId())  
-            if (sim.getGraph().getEdgeWeight(i, agent.getPartyId()) > maxVal)
-                maxVal = sim.getGraph().getEdgeWeight(i, agent.getPartyId());
-
-    sim.getParty1(agent.getId()).offers.push_back(agentId); 
+    return maxParty;
 }
 
 SelectionPolicy* EdgeWeightSelectionPolicy::duplicate(){
