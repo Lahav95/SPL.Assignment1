@@ -26,10 +26,9 @@ Party& Party::operator=(const Party& other){
         mId = other.mId;
         mName = other.mName;
         mMandates = other.mMandates;
-        if(mJoinPolicy){
+        if(mJoinPolicy)
             delete mJoinPolicy;
-            // mJoinPolicy = nullptr;
-        }
+            
         mJoinPolicy = other.mJoinPolicy->duplicate();
     }   
     return *this;
@@ -44,7 +43,7 @@ Party::Party(Party&& other):  timer(other.timer), coalitionId(other.coalitionId)
 
 //move assignment operator
 Party& Party::operator=(Party&& other){
-  //  clear();
+
     timer = other.timer;
     coalitionId = other.coalitionId;
     offers = other.offers;
@@ -94,18 +93,14 @@ void Party::step(Simulation &s)
             Agent& temp = s.getAgentbyId(aToJoin);
             int coToJoin= temp.coalitionId;
             s.mCoalitions.at(coToJoin).addParty(*this , mId);  //add party to coalition  //Coalition
-            
-            // check all
          
             s.clone(aToJoin, mId);               //clone agent and update        //simulation
             
             setState(Joined);
             
         }    
-
     }
     else{   // waiting
-
     }
     
 }
@@ -117,5 +112,4 @@ void Party::setCoalitionId(int id){
 
 void Party:: addOffer(int agentId){
     offers.push_back(agentId);
-    
 }

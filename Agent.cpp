@@ -77,7 +77,7 @@ void Agent::step(Simulation &sim)
     for (int i = 0; i < sim.getGraph().getNumVertices(); i++){
         bool offered = true;
         if (i != mPartyId && sim.getGraph().getEdgeWeight(mPartyId, i) > 0)     // not this & connected
-            if (sim.getParty(i).getState() != Joined){      //not joined
+            if (sim.getParty(i).getState() != Joined){                              //not joined
                 for(int agent: sim.getParty(i).offers){
                     if (sim.getAgentbyId(agent).coalitionId == (*this).coalitionId)    // offered by the same coalition
                         offered = false;
@@ -94,4 +94,4 @@ void Agent::step(Simulation &sim)
         if (sim.getParty(i).getState() == Waiting) 
             sim.getParty1(i).setState(CollectingOffers);    // update party state
     }
-}       //check sending agent by object / maybe send only ID
+}       

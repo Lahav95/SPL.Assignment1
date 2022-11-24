@@ -12,9 +12,9 @@ Simulation::Simulation(Graph graph, vector<Agent> agents) : partiesByCoalitions(
     for (Agent a: agents){
         int coalitionId = a.getId();
         int partyId = a.getPartyId();
-        Coalition c (coalitionId);       //creates a coalition object
+        Coalition c (coalitionId);                  //creates a coalition object
         c.addParty(getParty1(partyId), partyId);
-        mCoalitions.push_back(c);       // add coalition to the list in simulation
+        mCoalitions.push_back(c);                           // add coalition to the list in simulation
         partiesByCoalitions.push_back(c.lPartiesId);
         getAgents2()[coalitionId].coalitionId = coalitionId;            //update coalition Id of agent 
     }
@@ -88,10 +88,10 @@ const vector<vector<int>> Simulation::getPartiesByCoalitions() const
 {
     // TODO: you MUST implement this method for getting proper output, read the documentation above.
     
-    return partiesByCoalitions;     //check
+    return partiesByCoalitions;     
 }
 
-Agent &Simulation::getAgentbyId(int agentId)       // Not necessarily needed
+Agent &Simulation::getAgentbyId(int agentId)       
 {
     vector<Agent>& temp = getAgents2();
     return temp.at(agentId);   

@@ -27,10 +27,10 @@ SelectionPolicy* MandatesSelectionPolicy::duplicate(){
 int EdgeWeightSelectionPolicy::select(Simulation &sim, Agent agent, vector<int> validParties){
 
     int maxVal = 0;
-    int maxParty = validParties[0];      // ? optional party number one (maybe only)
+    int maxParty = validParties[0];      
     for (int i: validParties){
         int temp = sim.getGraph().getEdgeWeight(i, agent.getPartyId());
-        if (temp > maxVal){     //update max
+        if (temp > maxVal){             //update max
                 maxVal = temp;
                 maxParty = i;
             }

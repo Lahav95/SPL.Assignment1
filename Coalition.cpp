@@ -3,7 +3,6 @@
 #include "Simulation.h"
 
 
-//Coalition::Coalition(): mCoalition(-1), numOfMandates(-1)  {}  //default constructor
 
 Coalition::Coalition(int agentId) : mCoalition(agentId), numOfMandates(0), lPartiesId({}){
 

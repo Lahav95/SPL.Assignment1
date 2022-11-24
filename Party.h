@@ -28,7 +28,6 @@ public:
     ~Party();
     Party(Party&& other);
     Party& operator=(Party&& other);
-//    void clear();
 
     State getState() const;
     void setState(State state);
@@ -36,9 +35,7 @@ public:
     void step(Simulation &s);
     const string &getName() const;
 
-
     int timer;
-
     int coalitionId;
     void setCoalitionId(int);
     int getPartyId();

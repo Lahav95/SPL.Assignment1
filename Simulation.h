@@ -30,7 +30,6 @@ public:
 
 
     vector<vector<int>> partiesByCoalitions;
-
     vector<Coalition> mCoalitions;
 
     Agent &getAgentbyId(int agentId);

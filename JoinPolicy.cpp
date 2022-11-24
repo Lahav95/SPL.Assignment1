@@ -6,10 +6,10 @@
 int MandatesJoinPolicy::Join(Simulation& sim, vector<int> offerList){
     int answerId = offerList[0];
     int coalitionId= sim.getAgentbyId(answerId).coalitionId;
-    int maxMandates = sim.mCoalitions.at(coalitionId).numOfMandates;        //instead of numMandates of agent
+    int maxMandates = sim.mCoalitions.at(coalitionId).numOfMandates;        // get agent's mandates from coalition
     for(int a: offerList){
         int cId= sim.getAgentbyId(a).coalitionId;
-        int mandates = sim.mCoalitions.at(cId).numOfMandates;        //instead of numMandates of agent
+        int mandates = sim.mCoalitions.at(cId).numOfMandates;        
         if (mandates > maxMandates){
             maxMandates = mandates;
             answerId = a;
